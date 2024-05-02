@@ -7,20 +7,21 @@ const reviewSchema = new Schema({
     type: Number,
     required: true 
   },
-  Comment: {
+  comment: {
     type: String,
     required: true
   }
 
 }, {timestamps: true})
+
 const rentSchema = new Schema({
   user_id: {
     type: String,
-    required: true,
+    // required: true,
   },
   rentedAt: {
     type: Date,
-    required: true
+    // required: true
   },
   returnDate: {
     type: Date
@@ -30,23 +31,18 @@ const rentSchema = new Schema({
 
 const saleSchema = new Schema({
   user_id: {
-    type: Number,
+    type: String,
     required: true,
   },
 },{timestamps : true})
 
 const itemSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   name: {
     type: String,
     // required : true
   },
   owner_id:{
-    type: Number,
+    type: String,
     // required: true
   },
   description:{
@@ -69,7 +65,7 @@ const itemSchema = new Schema({
     type: Number,
   },
   category_id:{
-    type: Number,
+    type: String,
     // required: true
   },
   rent: [rentSchema],
