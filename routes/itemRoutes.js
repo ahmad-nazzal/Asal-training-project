@@ -5,8 +5,17 @@ import { addItem,getItems,updateItem,deleteItem } from "../controllers/itemContr
 const router = express.Router()
 
 router.route("/").post(addItem).get(getItems)
-router.route("/:_id").put(updateItem).delete(deleteItem)
 
+router.get("/", async function(){
+  try {
+    const items = await getItems()
+  } catch (error) {
+    
+  }
+
+
+})
+router.route("/:_id").put(updateItem).delete(deleteItem)
 
 
 export default router

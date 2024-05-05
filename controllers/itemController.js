@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Item from "../models/item.js";
 
 async function addItem(req,res)
@@ -13,17 +12,10 @@ async function addItem(req,res)
     
 }
 
-async function getItems(req,res)
+async function getItems()
 {
-  try {
     const items = await Item.find()
-    if(!items)
-      res.status(404).send("there are no items")
-    res.status(200).send(items)
-    
-  } catch (error) {
-    res.status(404).send(error)
-  }
+    return items
 
 }
 
