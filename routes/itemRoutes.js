@@ -4,18 +4,54 @@ import { addItem,getItems,updateItem,deleteItem } from "../controllers/itemContr
 
 const router = express.Router()
 
-router.route("/").post(addItem).get(getItems)
-
-router.get("/", async function(){
+router.post("/", async function(req,res){
   try {
-    const items = await getItems()
+    const itemBody = req.body
+    const response = await addItem(itemBody)
+    res.status(200).send(response)
+
   } catch (error) {
-    
+    res.status(400).send(error)
   }
 
 
 })
-router.route("/:_id").put(updateItem).delete(deleteItem)
+
+router.get("/", async function(req,res){
+  try {
+    const items = await getItems()
+    res.status(200).send(items)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+
+
+})
+
+router.put("/:id", async function(req,res){
+  try {
+    const itemId =  req.params.id
+    const updatedValues = req.body
+    const response = await updateItem(itemId,updatedValues)
+    res.status(200).send(response)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+
+
+})
+
+router.delete("/:id", async function(req,res){
+  try {
+    const itemId = req.params.id
+    const response = await deleteItem(itemId)
+    res.status(200).send(response)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+
+
+})
 
 
 export default router

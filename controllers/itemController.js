@@ -1,52 +1,34 @@
 import Item from "../models/item.js";
 
-async function addItem(req,res)
+async function addItem(itemBody)
 {
-  try {
-    const item= new Item(req.body)
-    const result = await item.save()
-    res.status(201).send(result)
-  } catch (error) {
-    res.status(404).send(error)
-  }
-    
+    const item= new Item(itemBody)
+    await item.save()
+    return "item addedd successfully"
 }
 
 async function getItems()
 {
     const items = await Item.find()
     return items
-
 }
 
-async function updateItem(req,res)
+async function updateItem(itemId,updatedValues)
 {
-  try {
-    const filter = {_id : req.params._id}
-    const update = req.body
-    const updatedItem = await Item.findOneAndUpdate(filter, update, {new : true})
-    res.status(200).send(updatedItem)
-    
-  } catch (error) {
-    res.status(404).send(error)
-  }
+    const updatedItem = await Item.findByIdAndUpdate(itemId, updatedValues, {new : true})
+    if(!updatedItem){
+      return "Item not found"
+    }
+    return "Item updated successfully"
 }
 
-async function deleteItem(req,res)
+async function deleteItem(itemId)
 {
-  const _id = req.params._id
-  try {
-    const deletedItem = await Item.findOneAndDelete({_id: _id})
-    if(deletedItem)
-      res.status(200).send(deletedItem)
+    const deletedItem=await Item.findByIdAndDelete(itemId)
+    if(!deletedItem)
+      return "Item not found"
     else
-      res.status(404).send(`there is no item with an id ${_id}`)
-    
-  } catch (error) {
-    res.status(404).send(error)
-  }
-
-
+      return "Item deleted successfully"
 }
 
 

@@ -17,6 +17,10 @@ const userSchema = new Schema({
     required: true,
     unique: true
   },
+  name: {
+    type: String,
+    required: true
+  },
   phone_number: {
     type: String,
     required: true,
@@ -62,5 +66,5 @@ userSchema.methods.isValidPassword = async function(password) {
   }
 }
 
-const users = mongoose.model("users",userSchema)
-export default users 
+const User = mongoose.model("users",userSchema)
+export default User 

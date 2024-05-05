@@ -12,7 +12,10 @@ const reviewSchema = new Schema({
     required: true
   }
 
-}, {timestamps: true})
+}, {
+  timestamps: true,
+  _id:false
+})
 
 const rentSchema = new Schema({
   user_id: {
@@ -27,14 +30,20 @@ const rentSchema = new Schema({
     type: Date
   },
   reviews: [reviewSchema]
-}, { timestamps : true}) 
+}, {
+  timestamps : true,
+  _id: false
+}) 
 
 const saleSchema = new Schema({
   user_id: {
     type: String,
     required: true,
   },
-},{timestamps : true})
+},{
+  timestamps : true,
+  _id:false
+})
 
 const itemSchema = new Schema({
   name: {
