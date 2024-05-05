@@ -1,6 +1,6 @@
 import Item from "../models/item.js";
 
-async function addItem(itemBody)
+async function addItem(itemBody: object)
 {
     const item= new Item(itemBody)
     await item.save()
@@ -13,7 +13,7 @@ async function getItems()
     return items
 }
 
-async function updateItem(itemId,updatedValues)
+async function updateItem(itemId: string,updatedValues: object)
 {
     const updatedItem = await Item.findByIdAndUpdate(itemId, updatedValues, {new : true})
     if(!updatedItem){
@@ -22,7 +22,7 @@ async function updateItem(itemId,updatedValues)
     return "Item updated successfully"
 }
 
-async function deleteItem(itemId)
+async function deleteItem(itemId: string)
 {
     const deletedItem=await Item.findByIdAndDelete(itemId)
     if(!deletedItem)

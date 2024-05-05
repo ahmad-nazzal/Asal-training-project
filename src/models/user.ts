@@ -53,15 +53,15 @@ userSchema.pre('save', async function(next){
     const passwordHash = await bcrypt.hash(this.password, salt)
     this.password= passwordHash
     next()
-  } catch (error) {
+  } catch (error: any) {
     next(error)
   }
 })
 
-userSchema.methods.isValidPassword = async function(password) {
+userSchema.methods.isValidPassword = async function(password: string) {
   try {
     return await bcrypt.compare(password, this.password)
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error)
   }
 }

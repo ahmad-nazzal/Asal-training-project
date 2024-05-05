@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json())
 
 
-mongoose.connect(process.env.DB_URI)
+mongoose.connect(process.env.DB_URI!)
 .then(()=>{
   console.log("connect sucessfully");
   app.listen(process.env.PORT)

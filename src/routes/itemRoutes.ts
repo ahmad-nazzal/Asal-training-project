@@ -1,10 +1,10 @@
-import express from "express"
+import express,{Request,Response} from "express"
 import { addItem,getItems,updateItem,deleteItem } from "../controllers/itemController.js"
 
 
 const router = express.Router()
 
-router.post("/", async function(req,res){
+router.post("/", async function(req: Request,res: Response){
   try {
     const itemBody = req.body
     const response = await addItem(itemBody)
@@ -17,7 +17,7 @@ router.post("/", async function(req,res){
 
 })
 
-router.get("/", async function(req,res){
+router.get("/", async function(req: Request,res: Response){
   try {
     const items = await getItems()
     res.status(200).send(items)
@@ -28,7 +28,7 @@ router.get("/", async function(req,res){
 
 })
 
-router.put("/:id", async function(req,res){
+router.put("/:id", async function(req: Request,res: Response){
   try {
     const itemId =  req.params.id
     const updatedValues = req.body
@@ -41,7 +41,7 @@ router.put("/:id", async function(req,res){
 
 })
 
-router.delete("/:id", async function(req,res){
+router.delete("/:id", async function(req: Request,res: Response){
   try {
     const itemId = req.params.id
     const response = await deleteItem(itemId)

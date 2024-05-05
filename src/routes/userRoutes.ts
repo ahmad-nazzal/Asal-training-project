@@ -1,9 +1,9 @@
-import express from "express"
+import express, {Request, Response} from "express"
 import {addUser,getUsers,updateUser,deleteUser} from "../controllers/userController.js"
 
 const router = express.Router()
 
-router.post("/", async function(req,res){
+router.post("/", async function(req: Request,res: Response){
   try {
     const userBody = req.body
     const response = await addUser(userBody)
@@ -16,7 +16,7 @@ router.post("/", async function(req,res){
 
 })
 
-router.get("/", async function(req,res){
+router.get("/", async function(req: Request,res: Response){
   try {
     const users = await getUsers()
     res.status(200).send(users)
@@ -25,7 +25,7 @@ router.get("/", async function(req,res){
   }
 })
 
-router.put("/:id", async function(req,res){
+router.put("/:id", async function(req: Request,res: Response){
   try {
     const userId =  req.params.id
     const updatedValues = req.body
@@ -38,14 +38,13 @@ router.put("/:id", async function(req,res){
 
 })
 
-router.delete("/:id", async function(req,res){
+router.delete("/:id", async function(req: Request,res: Response){
   try {
     const userId = req.params.id
-    console.log(userId);
     const response = await deleteUser(userId)
-    console.log(response+"pqpq");
     res.status(200).send(response)
   } catch (error) {
+    console.log("fff");
     res.status(400).send(error)
   }
 })

@@ -1,8 +1,8 @@
 import User from "../models/user.js";
 
-async function addUser()
+async function addUser(userBody: object)
 {
-    const user= new User(req.body)
+    const user= new User(userBody)
     await user.save()
     return "user addedd successfully"
 }
@@ -14,7 +14,7 @@ async function getUsers()
 
 }
 
-async function updateUser(userId,updatedValues)
+async function updateUser(userId: string,updatedValues: object)
 {
   const updatedUser = await User.findByIdAndUpdate(userId, updatedValues, {new : true})
   if(!updatedUser){
@@ -23,7 +23,7 @@ async function updateUser(userId,updatedValues)
   return "user updated successfully"
 }
 
-async function deleteUser(userId)
+async function deleteUser(userId: string)
 {
   const deletedUser = await User.findByIdAndDelete(userId)
   if(!deletedUser)
