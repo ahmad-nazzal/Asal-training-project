@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express"
 import validateRequest from "../middleware/validator.js"
-import { userSchema } from "../validators/userValidator.js"
+import userSchema from "../validators/userValidator.js"
 import UserController from "../controllers/userController.js"
 
 const router = express.Router()
@@ -11,7 +11,7 @@ router.post("/",validateRequest(userSchema), async function(req: Request,res: Re
   try {
     const userBody = req.body
     const response = await userController.create(userBody)
-    res.status(200).send(response)
+    res.status(201).send(response)
 
   } catch (error) {
     res.status(400).send(error)

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const reviewSchema = new Schema({
   rating: {
     type: Number,
-    required: true 
+    required: true
   },
   comment: {
     type: String,
@@ -20,11 +20,11 @@ const reviewSchema = new Schema({
 const rentSchema = new Schema({
   user_id: {
     type: String,
-    // required: true,
+    required: true,
   },
   rentedAt: {
     type: Date,
-    // required: true
+    required: true
   },
   returnDate: {
     type: Date
@@ -48,19 +48,19 @@ const saleSchema = new Schema({
 const itemSchema = new Schema({
   name: {
     type: String,
-    // required : true
+    required : true
   },
   owner_id:{
     type: String,
-    // required: true
+    required: true
   },
   description:{
     type: String,
-    // required: true
+    required: true
   },
   available:{
     type: Boolean,
-    // required: true
+    required: true
   },
   type:{
     type: String,
@@ -75,7 +75,7 @@ const itemSchema = new Schema({
   },
   category_id:{
     type: String,
-    // required: true
+    required: true
   },
   rent: [rentSchema],
   sale: [saleSchema]

@@ -9,7 +9,7 @@ router.post("/", async function(req: Request,res: Response){
   try {
     const itemBody = req.body
     const response = await itemController.create(itemBody)
-    res.status(200).send(response)
+    res.status(201).send(response)
 
   } catch (error) {
     res.status(400).send(error)
