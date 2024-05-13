@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express"
-import validateRequest from "../middleware/validator.js"
 import userSchema from "../validators/userValidator.js"
 import UserController from "../controllers/userController.js"
+import validateRequest from "../middleware/requestValidator.js"
 
 const router = express.Router()
 const userController = new UserController();

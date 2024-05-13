@@ -1,11 +1,13 @@
 import express,{Request,Response} from "express"
 import ItemController from "../controllers/itemController.js"
+import itemSchema from "../validators/itemValidator.js";
+import validateRequest from "../middleware/requestValidator.js";
 
 const router = express.Router()
 const itemController = new ItemController();
 
 
-router.post("/", async function(req: Request,res: Response){
+router.post("/",validateRequest(itemSchema), async function(req: Request,res: Response){
   try {
     const itemBody = req.body
     const response = await itemController.create(itemBody)

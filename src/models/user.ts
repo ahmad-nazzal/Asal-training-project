@@ -1,8 +1,12 @@
-import mongoose from "mongoose";
+import mongoose,{Schema,Document} from "mongoose";
 import bcrypt from "bcrypt"
-const Schema = mongoose.Schema
 
-const locationSchema = new Schema({
+interface Location {
+  street?: string;
+  city: string;
+  country?: string;
+}
+const locationSchema = new Schema<Location>({
   street: String,
   city: {
     type: String,
@@ -11,7 +15,18 @@ const locationSchema = new Schema({
   country: String
 }, {_id: false})
 
-const userSchema = new Schema({
+interface UserDocument extends Document {
+  username: string;
+  name: string;
+  phone_number: string;
+  email: string;
+  password: string;
+  role: "user" | "admin";
+  address?: Location;
+  isValidPassword(password: string): Promise<boolean>;
+}
+
+const userSchema = new Schema<UserDocument>({
   username: {
     type: String,
     required: true,
@@ -67,4 +82,7 @@ userSchema.methods.isValidPassword = async function(password: string) {
 }
 
 const User = mongoose.model("users",userSchema)
-export default User 
+export {
+  User,
+  UserDocument
+}
