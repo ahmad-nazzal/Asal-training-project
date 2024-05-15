@@ -1,7 +1,7 @@
 import {User} from "../models/user.js";
 
 
-class UserController{
+class UserService{
 
   
   async create(userBody: object): Promise<string>
@@ -12,10 +12,9 @@ class UserController{
   }
   
   async getAll(): Promise<object>
-  {
+  {    
     const users = await User.find()
     return users
-  
   }
   
   async update(userId: string,updatedValues: object): Promise<string>
@@ -39,4 +38,4 @@ class UserController{
 }
 
 
-export default UserController
+export default UserService

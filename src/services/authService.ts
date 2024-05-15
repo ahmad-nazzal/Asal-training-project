@@ -26,28 +26,25 @@ class AuthController {
     }
 
     return {
-      success: true
+      success: true,
+      role:user.role
     }
   }
 
-  generateToken(payload: object, key: string, expiration: object) {
-    if (key) {
-      throw new Error("KEY environment variable is not defined");
+  generateAccessToken(payload: object) {
+    if (!process.env.ACCESS_SECRET_KEY) {
+      throw new Error("ACCESS_SECRET_KEY environment variable is not defined");
     }
-    return jwt.sign(payload, key, expiration)
+    return jwt.sign(payload, process.env.ACCESS_SECRET_KEY, {expiresIn: "10m"})
   }
 
-  verifyToken(token: string) {
-    try {
-      if (!process.env.SECRET_KEY) {
-        throw new Error("SECRET_KEY environment variable is not defined");
-      }
-      const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
-      return decodedToken
-    } catch (error) {
-      return false
+  generateRefreshToken(payload: object) {
+    if (!process.env.REFRESH_SECRET_KEY) {
+      throw new Error("REFRESH_SECRET_KEY environment variable is not defined");
     }
+    return jwt.sign(payload, process.env.REFRESH_SECRET_KEY, {expiresIn: "1y"})
   }
+
 }
 
 

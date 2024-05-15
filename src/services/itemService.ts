@@ -1,7 +1,7 @@
 import Item from "../models/item.js";
 
 
-class ItemController {
+class ItemService {
 
   async create(itemBody: object): Promise<string>
   {
@@ -37,4 +37,4 @@ class ItemController {
 
 
 
-export default ItemController
+export default ItemService
