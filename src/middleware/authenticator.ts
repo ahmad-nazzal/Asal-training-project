@@ -10,7 +10,8 @@ function authenticateToken(){
         res.status(401).send("ACCESS_SECRET_KEY environment variable is not defined")
       }
       else {
-        jwt.verify(token || "", process.env.ACCESS_SECRET_KEY!)
+        const user = jwt.verify(token || "", process.env.ACCESS_SECRET_KEY!)
+        req.user = user        
         next()
       }
     } catch (error) {

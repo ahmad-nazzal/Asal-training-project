@@ -20,7 +20,7 @@ router.post("/",authorizeRole(["user","admin"]),validateRequest(itemSchema), asy
 })
 
 
-router.get("/",authorizeRole(["admin"]), async function(req: Request,res: Response){
+router.get("/",authorizeRole(["user","admin"]), async function(req: Request,res: Response){
   try {
     const items = await itemService.getAll()
     res.status(200).send(items)
@@ -30,7 +30,7 @@ router.get("/",authorizeRole(["admin"]), async function(req: Request,res: Respon
 })
 
 
-router.put("/:id",authorizeRole(["user","admin"]), async function(req: Request,res: Response){
+router.put("/:id",authorizeRole(["admin"]), async function(req: Request,res: Response){
   try {
     const itemId =  req.params.id
     const updatedValues = req.body

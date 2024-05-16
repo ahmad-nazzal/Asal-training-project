@@ -33,6 +33,11 @@ class ItemService {
       else
         return "Item deleted successfully"
   }
+  
+  async getItemsForUser(email: string, username: string) {
+    const items =["dd"]
+    return items
+  }
 }
 
 

@@ -27,7 +27,8 @@ class AuthController {
 
     return {
       success: true,
-      role:user.role
+      role:user.role,
+      id: user._id
     }
   }
 

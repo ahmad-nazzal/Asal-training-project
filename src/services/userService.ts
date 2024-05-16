@@ -4,11 +4,14 @@ import {User} from "../models/user.js";
 class UserService{
 
   
-  async create(userBody: object): Promise<string>
+  async create(userBody: object): Promise<any>
   {
       const user= new User(userBody)
       await user.save()
-      return "user addedd successfully"
+      return {
+        message: "user addedd successfully",
+        id: user._id
+      }
   }
   
   async getAll(): Promise<object>

@@ -2,12 +2,15 @@ import express, {Request, Response} from "express"
 import userSchema from "../validators/userValidator.js"
 import UserService from "../services/userService.js"
 import validateRequest from "../middleware/requestValidator.js"
+import { authorizeRole } from "../middleware/authenticator.js"
+import ItemService from "../services/itemService.js"
 
-const router = express.Router()
+const usersRouter = express.Router()
+const userRouter = express.Router()
 const userService = new UserService();
+const itemService = new ItemService();
 
-
-router.post("/",validateRequest(userSchema), async function(req: Request,res: Response){
+usersRouter.post("/",[validateRequest(userSchema), authorizeRole(["admin"])], async function(req: Request,res: Response){
   try {
     const userBody = req.body
     const response = await userService.create(userBody)
@@ -19,7 +22,7 @@ router.post("/",validateRequest(userSchema), async function(req: Request,res: Re
 })
 
 
-router.get("/", async function(req: Request,res: Response){
+usersRouter.get("/", authorizeRole(["admin"]), async function(req: Request,res: Response){
   try { 
     const users = await userService.getAll()
     res.status(200).send(users)
@@ -29,7 +32,7 @@ router.get("/", async function(req: Request,res: Response){
 })
 
 
-router.put("/:id", async function(req: Request,res: Response){
+usersRouter.put("/:id", authorizeRole(["user"]), async function(req: Request,res: Response){
   try {
     const userId =  req.params.id
     const updatedValues = req.body
@@ -41,7 +44,7 @@ router.put("/:id", async function(req: Request,res: Response){
 })
 
 
-router.delete("/:id", async function(req: Request,res: Response){
+usersRouter.delete("/:id", authorizeRole(["admin"]), async function(req: Request,res: Response) {
   try {
     const userId = req.params.id
     const response = await userService.delete(userId)
@@ -51,5 +54,20 @@ router.delete("/:id", async function(req: Request,res: Response){
   }
 })
 
+userRouter.get("/items", authorizeRole(["user","admin"]), async function(req: Request, res: Response) {
+  const {email, username}= req.user
+    try {
+    const items = await itemService.getItemsForUser(email,username)
+    res.status(200).send(items)
 
-export default router
+  } catch (error) {
+    res.status(400).send(error)    
+  }
+})
+
+
+export{
+  usersRouter,
+  userRouter
+} 
+  

@@ -14,8 +14,12 @@ route.post("/login",async (req: Request,res: Response)=>{
       res.status(400).send(authenticateResponse.message)
     }
     else {
-      const token = authController.generateAccessToken({username, email, role : authenticateResponse.role })  
-      const refreshToken = authController.generateRefreshToken({username, email, role : authenticateResponse.role  })  
+      const payload = {
+        id: authenticateResponse.id,
+        role : authenticateResponse.role
+      }
+      const token = authController.generateAccessToken(payload)  
+      const refreshToken = authController.generateRefreshToken(payload)  
       res.status(200).send({
         message: "Login successfully",
         token,
@@ -32,16 +36,15 @@ route.post("/login",async (req: Request,res: Response)=>{
 route.post("/signup",async (req: Request, res: Response)=>{
   try {
     const userController = new UserController();
-    const reponseMessage = userController.create(req.body);
+    const {message, id} = await userController.create(req.body);
     const payload = {
-      username: req.body.username,
-      email: req.body.email,
+      id,
       role: req.body.role
     }
     const token = authController.generateAccessToken(payload)  
     const refreshToken = authController.generateRefreshToken(payload)  
     res.status(200).send({
-      reponseMessage,
+      message,
       token,
       refreshToken
     })
@@ -52,8 +55,7 @@ route.post("/signup",async (req: Request, res: Response)=>{
 })
 
 interface TokenPayload extends JwtPayload {
-  email?: string,
-  username?: string,
+  id: string,
   role: string
 }
 route.post("/refresh-token", (req,res)=>{
@@ -65,10 +67,8 @@ route.post("/refresh-token", (req,res)=>{
     }
     const decodedToken = jwt.verify(refreshToken || "", process.env.REFRESH_SECRET_KEY!) as TokenPayload
     const payload = {
-      email: decodedToken.email,
-      username: decodedToken.username,
+      id: decodedToken.id,
       role: decodedToken.role
-
     }
     const newToken = authController.generateAccessToken(payload)
     res.status(200).send({
