@@ -55,9 +55,9 @@ usersRouter.delete("/:id", authorizeRole(["admin"]), async function(req: Request
 })
 
 userRouter.get("/items", authorizeRole(["user","admin"]), async function(req: Request, res: Response) {
-  const {email, username}= req.user
+  const {id}= req.user
     try {
-    const items = await itemService.getItemsForUser(email,username)
+    const items = await itemService.getItemsByUserId(id)
     res.status(200).send(items)
 
   } catch (error) {

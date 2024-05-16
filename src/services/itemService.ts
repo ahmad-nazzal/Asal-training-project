@@ -34,8 +34,10 @@ class ItemService {
         return "Item deleted successfully"
   }
   
-  async getItemsForUser(email: string, username: string) {
-    const items =["dd"]
+  async getItemsByUserId(userId: string) {
+    const items = await Item.find({
+      owner_id: userId
+    })
     return items
   }
 }
