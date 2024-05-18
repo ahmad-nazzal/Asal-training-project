@@ -31,6 +31,15 @@ usersRouter.get("/", authorizeRole(["admin"]), async function(req: Request,res: 
   }
 })
 
+usersRouter.get("/:userId", authorizeRole(["admin"]), async function(req: Request,res: Response){
+  const {userId} = req.params
+  try { 
+    const users = await userService.getUserById(userId)
+    res.status(200).send(users)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
 
 usersRouter.put("/:id", authorizeRole(["user"]), async function(req: Request,res: Response){
   try {

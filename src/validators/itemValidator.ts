@@ -8,7 +8,7 @@ const reviewSchema = Joi.object().keys({
 const rentSchema = Joi.object().keys({
   user_id: Joi.string().required(),
   rentedAt: Joi.date().required(),
-  returnDate: Joi.date().allow(null),
+  return_date: Joi.date().allow(null),
   reviews: Joi.array().items(reviewSchema)
 });
 
@@ -26,7 +26,7 @@ const itemSchema = Joi.object().keys({
   price: Joi.number(),
   category_id: Joi.string().required(),
   rent: Joi.array().items(rentSchema),
-  sale: Joi.array().items(saleSchema)
+  sale: saleSchema
 });
 
 export default itemSchema

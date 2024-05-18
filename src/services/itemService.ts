@@ -33,7 +33,10 @@ class ItemService {
       else
         return "Item deleted successfully"
   }
-  
+  async getItemById(itemId: string){
+    const items = await Item.findById(itemId)
+    return items
+  }
   async getItemsByUserId(userId: string) {
     const items = await Item.find({
       owner_id: userId

@@ -26,13 +26,12 @@ const rentSchema = new Schema({
     type: Date,
     required: true
   },
-  returnDate: {
+  return_date: {
     type: Date
   },
   reviews: [reviewSchema]
 }, {
   timestamps : true,
-  _id: false
 }) 
 
 const saleSchema = new Schema({
@@ -78,7 +77,7 @@ const itemSchema = new Schema({
     required: true
   },
   rent: [rentSchema],
-  sale: [saleSchema]
+  sale: saleSchema
 
 },{ timestamps : true });
 

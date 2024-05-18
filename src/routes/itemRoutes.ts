@@ -29,6 +29,15 @@ router.get("/",authorizeRole(["user","admin"]), async function(req: Request,res:
   }
 })
 
+router.get("/:itemId",authorizeRole(["user","admin"]), async function(req: Request,res: Response){
+  const itemId = req.params.itemId
+  try {
+    const item = await itemService.getItemById(itemId)
+    res.status(200).send(item)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
 
 router.put("/:id",authorizeRole(["admin"]), async function(req: Request,res: Response){
   try {

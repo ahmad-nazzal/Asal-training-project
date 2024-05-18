@@ -19,6 +19,12 @@ class UserService{
     const users = await User.find()
     return users
   }
+
+  async getUserById(userId: string)
+  {    
+    const users = await User.findById(userId)
+    return users
+  }
   
   async update(userId: string,updatedValues: object): Promise<string>
   {
