@@ -6,7 +6,6 @@ import { authorizeRole } from "../middleware/authenticator.js"
 import ItemService from "../services/itemService.js"
 
 const usersRouter = express.Router()
-const userRouter = express.Router()
 const userService = new UserService();
 const itemService = new ItemService();
 
@@ -63,7 +62,7 @@ usersRouter.delete("/:id", authorizeRole(["admin"]), async function(req: Request
   }
 })
 
-userRouter.get("/items", authorizeRole(["user","admin"]), async function(req: Request, res: Response) {
+usersRouter.get("/items", authorizeRole(["user","admin"]), async function(req: Request, res: Response) {
   const {id}= req.user
     try {
     const items = await itemService.getItemsByUserId(id)
@@ -76,7 +75,5 @@ userRouter.get("/items", authorizeRole(["user","admin"]), async function(req: Re
 
 
 export{
-  usersRouter,
-  userRouter
+  usersRouter
 } 
-  

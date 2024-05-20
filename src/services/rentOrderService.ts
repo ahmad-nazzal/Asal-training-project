@@ -1,4 +1,5 @@
 import Item from "../models/item.js";
+import Rent from "../models/rent.js";
 
 
 class RentService {
@@ -13,12 +14,13 @@ class RentService {
     if(item.type === "sale")
       return "Item is not for rentting just for selling"
     
-    item.rent.push({
+    const rent = new Rent({
       user_id: userId,
+      item_id: itemId,
       rentedAt: new Date(),
       return_date: returnDate
     })
-
+    await rent.save()
     item.available = false
     await item.save()
     return "Item rented successfully"

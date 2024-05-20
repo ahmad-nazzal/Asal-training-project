@@ -1,10 +1,12 @@
 import express, {Request, Response} from "express";
 import RentService from "../services/rentOrderService.js";
+import validateRequest from "../middleware/requestValidator.js";
+import rentSchema from "../validators/rentValidator.js";
 
 const rentService = new RentService()
 const router = express.Router()
 
-router.post("/item/:itemId", async (req: Request, res: Response) => {
+router.post("/item/:itemId", validateRequest(rentSchema), async (req: Request, res: Response) => {
   const {id} = req.user
   const {itemId} = req.params
   try {
