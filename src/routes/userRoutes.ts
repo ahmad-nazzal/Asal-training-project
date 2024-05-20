@@ -4,10 +4,14 @@ import UserService from "../services/userService.js"
 import validateRequest from "../middleware/requestValidator.js"
 import { authorizeRole } from "../middleware/authenticator.js"
 import ItemService from "../services/itemService.js"
+import RentService from "../services/rentOrderService.js"
+import rentSchema from "../validators/rentValidator.js"
 
 const usersRouter = express.Router()
 const userService = new UserService();
 const itemService = new ItemService();
+const rentService = new RentService();
+
 
 usersRouter.post("/",[validateRequest(userSchema), authorizeRole(["admin"])], async function(req: Request,res: Response){
   try {
@@ -73,6 +77,15 @@ usersRouter.get("/:userId/items", authorizeRole(["user","admin"]), async functio
   }
 })
 
+usersRouter.post("/:userId/items/:itemId/rent", [authorizeRole(["user","admin"]), validateRequest(rentSchema)], async function (req: Request, res: Response) {
+  const {userId, itemId} = req.params
+  try {
+    const response = await rentService.rentItem(userId, itemId);
+    res.status(201).send(response)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+})
 
 export{
   usersRouter
