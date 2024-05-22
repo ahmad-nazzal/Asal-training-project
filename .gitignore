@@ -131,4 +131,4 @@ dist
 
 build
 nodemon.json
-types/
+types
